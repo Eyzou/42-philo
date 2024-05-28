@@ -1,23 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 12:54:02 by ehamm             #+#    #+#             */
-/*   Updated: 2024/05/28 16:03:28 by ehamm            ###   ########.fr       */
+/*   Created: 2024/05/28 15:55:21 by ehamm             #+#    #+#             */
+/*   Updated: 2024/05/28 16:09:02 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-
-int main (int argc, char **argv)
+int	routine(t_data *data)
 {
-	t_data *data;
+	
 
-	prog_init(data);
-	create_thread(data);
-	join_thread(data);
+}
+
+int create_thread(t_data *data)
+{
+	pthread_t t[data->number_philo];
+	int i;
+	while(i < data->number_philo)
+	{
+		pthread_create(&t[i], NULL, routine(data) ,data->philo);
+		i++;
+	}
+
+	return (0);
+}
+
+int join_thread(t_data *data)
+{
+	pthread_t t[data->number_philo];
+	int i;
+	while(i < data->number_philo)
+	{
+		pthread_join(t[i],NULL);
+		i++;
+	}
+
 }

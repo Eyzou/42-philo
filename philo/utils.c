@@ -1,23 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 12:54:02 by ehamm             #+#    #+#             */
-/*   Updated: 2024/05/28 16:03:28 by ehamm            ###   ########.fr       */
+/*   Created: 2024/05/28 14:47:03 by ehamm             #+#    #+#             */
+/*   Updated: 2024/05/28 15:30:19 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-
-int main (int argc, char **argv)
+int	ft_atoi(const char *str)
 {
-	t_data *data;
+	int	res;
+	int	sign;
 
-	prog_init(data);
-	create_thread(data);
-	join_thread(data);
+	res = 0;
+	sign = 1;
+	while (*str == 32 || (*str >= 9 && *str <= 13))
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			sign *= -1;
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		res = res * 10 +(*str - '0');
+		str++;
+	}
+	return (res * sign);
 }

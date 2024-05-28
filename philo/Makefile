@@ -4,7 +4,10 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -pthread
 INCLUDE = -I philo.h
 
-SRCS = main.c
+SRCS = main.c \
+		init.c \
+		time.c \
+		utils.c \
 
 OBJ =			$(SRCS:%.c=%.o)
 
@@ -13,10 +16,7 @@ all: ${NAME}
 srcs/%.o: srcs/%.c
 	$(CC) $(CFLAGS) $(INCLUDE) -O2 -c $< -o $(<:%.c=%.o)
 
-
 $(NAME): $(OBJ)
-	make -C ./mlx
-	make all -C ./libft
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
 clean:
