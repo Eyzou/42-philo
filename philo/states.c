@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   states.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 12:54:02 by ehamm             #+#    #+#             */
-/*   Updated: 2024/05/29 13:36:29 by ehamm            ###   ########.fr       */
+/*   Created: 2024/05/29 13:31:28 by ehamm             #+#    #+#             */
+/*   Updated: 2024/05/29 13:40:01 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int main (int argc, char **argv)
+void	change_state(t_data *data, t_state state)
 {
-	t_data *data;
+	pthread_mutex_lock(&data->philo->state_lock);
+	if(data->philo->state != DEAD)
+		data->philo->state = state;
+	pthread_mutex_unlock(&data->philo->state_lock);
+}
 
-	prog_init(data,argv);
-	create_thread(data);
+void	print_msg(t_data *data, int id, msg)
+{
+	
 }
