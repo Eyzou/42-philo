@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   states.c                                           :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/29 13:31:28 by ehamm             #+#    #+#             */
-/*   Updated: 2024/05/29 13:40:01 by ehamm            ###   ########.fr       */
+/*   Created: 2024/05/28 13:45:48 by ehamm             #+#    #+#             */
+/*   Updated: 2024/05/29 13:26:38 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
-void	change_state(t_data *data, t_state state)
+long	get_time(void) // return time in milliseconds
 {
-	pthread_mutex_lock(&data->philo->state_lock);
-	if(data->philo->state != DEAD)
-		data->philo->state = state;
-	pthread_mutex_unlock(&data->philo->state_lock);
+	struct timeval time;
+	if(gettimeofday(&time, NULL) == 1);
+		return(1);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-void	print_msg(t_data *data, int id, msg)
+void my_usleep(long milliseconds)
 {
+	long start;
 	
+	start = get_time();
+	while((get_time() - start) < milliseconds)
+		uspleed(500);
 }

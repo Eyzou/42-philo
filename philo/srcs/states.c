@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   states.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 14:47:03 by ehamm             #+#    #+#             */
-/*   Updated: 2024/05/28 15:30:19 by ehamm            ###   ########.fr       */
+/*   Created: 2024/05/29 13:31:28 by ehamm             #+#    #+#             */
+/*   Updated: 2024/05/29 13:40:01 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
-int	ft_atoi(const char *str)
+void	change_state(t_data *data, t_state state)
 {
-	int	res;
-	int	sign;
+	pthread_mutex_lock(&data->philo->state_lock);
+	if(data->philo->state != DEAD)
+		data->philo->state = state;
+	pthread_mutex_unlock(&data->philo->state_lock);
+}
 
-	res = 0;
-	sign = 1;
-	while (*str == 32 || (*str >= 9 && *str <= 13))
-		str++;
-	if (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
-			sign *= -1;
-		str++;
-	}
-	while (*str >= '0' && *str <= '9')
-	{
-		res = res * 10 +(*str - '0');
-		str++;
-	}
-	return (res * sign);
+void	print_msg(t_data *data, int id, msg)
+{
+	
 }

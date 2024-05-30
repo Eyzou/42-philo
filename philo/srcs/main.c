@@ -10,12 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
 int main (int argc, char **argv)
 {
 	t_data *data;
 
-	prog_init(data,argv);
+	data = malloc(sizeof(t_data));
+	prog_init(data,argc,argv);
 	create_thread(data);
 }

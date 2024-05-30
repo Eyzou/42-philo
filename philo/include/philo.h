@@ -33,16 +33,10 @@ typedef struct s_philo
 {
 	int				id;
 	int				number_meal;
-	pthread_mutex_t	*meal_lock;
 	int				start_eat_time;
 	int				last_meal_time;
-	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	*l_fork;
-	pthread_mutex_t	*write_lock;
-	pthread_mutex_t	*dead_lock;
-	t_state			*state;
-	pthread_mutex_t	*state_lock;
-
+	int				r_fork;
+	int				l_fork;
 }					t_philo;
 
 typedef struct s_data
@@ -51,8 +45,9 @@ typedef struct s_data
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				time_must_eat;
-	int				death;
+	int				number_must_eat;
+	int				*forks;
+	pthread_mutex_t	*forks_lock;
 	pthread_mutex_t	*write_lock;
 	pthread_mutex_t	*dead_lock;
 	pthread_mutex_t	*meal_lock;
@@ -60,12 +55,13 @@ typedef struct s_data
 }					t_data;
 
 // init
-int					prog_init(t_data *data, char **argv);
-int					create_thread(t_data *data);
-void				*routine(void *arg);
+int				prog_init(t_data *data, int argc, char **argv);
+int				create_thread(t_data *data);
+void			*routine(void *arg);
 
 // utils
-long				get_time(void);
-void 				my_usleep(long sleep_time);
+long			get_time(void);
+void 			my_usleep(long sleep_time);
+int				ft_atoi(const char *str);
 
 #endif

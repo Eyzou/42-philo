@@ -2,14 +2,16 @@ NAME = philo
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -pthread
-INCLUDE = -I philo.h
+INCLUDE = -I /include
 
-SRCS = main.c \
-		init.c \
-		time.c \
-		utils.c \
+SRCS = 	srcs/main.c \
+		srcs/init.c \
+		srcs/routine.c \
+		srcs/states.c \
+		srcs/time.c \
+		srcs/utils.c 
 
-OBJ =			$(SRCS:%.c=%.o)
+OBJ = $(SRCS:%.c=%.o)
 
 all: ${NAME}
 

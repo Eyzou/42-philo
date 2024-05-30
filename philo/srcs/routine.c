@@ -10,17 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
 void *routine(void *arg)
 {
-	int philo;
-	philo = *(t_data*)arg;
-	if(philo->philo->id % 2 = 0)
-		my_sleep(data->philo->eat_time / 2);
+	t_data *data;
+	data = (t_data*)arg;
+	if(data->philo->id % 2 = 0)
+		my_sleep(data->time_to_eat / 2);
 	while (philo->philo->state != DEAD)
 	{
-		if(get_time())
+		if(get_time() - philo->last_meal_time > philo->time_to_die)
+		{
+			change_state(philo,DEAD);
+			return (NULL);
+		}
+		else
 }
 
 int create_thread(t_data *data)
