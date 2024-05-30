@@ -3,30 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:55:21 by ehamm             #+#    #+#             */
-/*   Updated: 2024/05/29 13:38:31 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/05/30 19:48:20 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
+int	change_state(t_data *data, int state)
+{
+	data->philo->state = state;
+	if(data->philo->state != DEAD)
+		return(state);
+	else
+		return (DEAD);
+}
+
+void	print_msg(t_data *data)
+{
+	pthread_mutex_lock(&data->write_lock);
+	pthread_mutex_unlock(&data->write_lock);
+}
+
 void *routine(void *arg)
 {
 	t_data *data;
 	data = (t_data*)arg;
-	if(data->philo->id % 2 = 0)
-		my_sleep(data->time_to_eat / 2);
-	while (philo->philo->state != DEAD)
+	if(data->philo->id % 2 == 0)
+		my_usleep(data->time_to_eat / 2);
+	while (1)
 	{
-		if(get_time() - philo->last_meal_time > philo->time_to_die)
-		{
-			change_state(philo,DEAD);
-			return (NULL);
-		}
-		else
+		eat(data);
+		sleeping(data);
+	}
 }
+
 
 int create_thread(t_data *data)
 {
@@ -47,27 +60,23 @@ int create_thread(t_data *data)
 	return (0);
 }
 
-void eat(void *philo)
+void 	eat(t_data *data)
 {
-	//nombre pair commence a manger
-	if(data->id % 2 = 0)
-	{
-		pthread_mutex_lock(&data->r_fork);
-		pthread_mutex_lock(&data->l_fork);	
-	}
-	pthread_mutex_lock(&data->r_fork);
-	pthread_mutex_lock(&data->l_fork);
-	
-	pthread_mutex_unlock(&data->r_fork);
-	pthread_mutex_unlock(&data->l_fork);
+	pthread_mutex_lock(&data->forks_lock[data->philo->r_fork]);
+	pthread_mutex_lock(&data->forks_lock[data->philo->l_fork]);
+	change_state(data, EATING);
+	data->philo->last_meal_time = get_time();
+	print_msg(data, EATING);
+	my_usleep(data->time_to_eat);
+	pthread_mutex_unlock(&data->forks_lock[data->philo->r_fork]);
+	pthread_mutex_unlock(&data->forks_lock[data->philo->l_fork]);
 }
 
-int	sleep(t_data *data)
-{}
-
-int think(t_data *data)
+int	sleeping(t_data *data)
 {
-	change_state(data->philo,THINKING);
-	if (change_state(data->philo) == DEAD)
+	if(change_state(data,SLEEPING))
 		return(1);
+	print_msg(data, SLEEPING);
+	my_usleep(data->time_to_sleep);
+	return(0);
 }
