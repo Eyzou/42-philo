@@ -34,3 +34,20 @@ int	ft_atoi(const char *str)
 	}
 	return (res * sign);
 }
+
+long	get_time(void) // return time in milliseconds
+{
+	struct timeval time;
+	if(gettimeofday(&time, NULL) == 1);
+		return(1);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+}
+
+void my_usleep(long milliseconds)
+{
+	long start;
+	
+	start = get_time();
+	while((get_time() - start) < milliseconds)
+		uspleed(500);
+}

@@ -8,7 +8,6 @@ SRCS = 	srcs/main.c \
 		srcs/init.c \
 		srcs/routine.c \
 		srcs/states.c \
-		srcs/time.c \
 		srcs/utils.c 
 
 OBJ = $(SRCS:%.c=%.o)
