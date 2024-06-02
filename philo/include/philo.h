@@ -6,7 +6,7 @@
 /*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/05/30 20:03:30 by elo              ###   ########.fr       */
+/*   Updated: 2024/05/31 13:42:36 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,13 @@ typedef enum e_state
 
 typedef struct s_philo
 {
-	pthread_t		thread;
 	int				id;
 	int				number_meal;
-	int				start_time;
+	long			start_time;
 	int				last_meal_time;
 	int				state;
-	int				r_fork;
-	int				l_fork;
+	int 	r_fork;
+	int		l_fork;
 	t_data			*data;
 }					t_philo;
 
@@ -65,13 +64,12 @@ int				prog_init(t_data *data, int argc, char **argv);
 int				create_thread(t_data *data);
 void			*routine(void *arg);
 void 			eat(t_data *data);
-int				change_state(t_data *data, int state);
-void			print_msg(t_data *data, int state);
+void			print_msg(t_data *data, int id, char *msg);
 int				sleeping(t_data *data);
 
 // utils
 long			get_time(void);
-void 			my_usleep(long milliseconds);
+void 			my_usleep(int milliseconds);
 long			ft_atol(const char *str);
 void 			error_msg(char *msg);
 

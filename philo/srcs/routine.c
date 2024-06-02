@@ -6,24 +6,18 @@
 /*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:55:21 by ehamm             #+#    #+#             */
-/*   Updated: 2024/05/30 19:48:20 by elo              ###   ########.fr       */
+/*   Updated: 2024/05/31 12:31:39 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	change_state(t_data *data, int state)
+void	print_msg(t_data *data, int id, char *msg)
 {
-	data->philo->state = state;
-	if(data->philo->state != DEAD)
-		return(state);
-	else
-		return (DEAD);
-}
-
-void	print_msg(t_data *data)
-{
+	long time;
+	time = get_time() - data->philo->start_time;
 	pthread_mutex_lock(&data->write_lock);
+	printf("%ld %d %s\n", time, id, msg);
 	pthread_mutex_unlock(&data->write_lock);
 }
 
@@ -36,7 +30,6 @@ void *routine(void *arg)
 	while (1)
 	{
 		eat(data);
-		sleeping(data);
 	}
 }
 
@@ -64,19 +57,12 @@ void 	eat(t_data *data)
 {
 	pthread_mutex_lock(&data->forks_lock[data->philo->r_fork]);
 	pthread_mutex_lock(&data->forks_lock[data->philo->l_fork]);
-	change_state(data, EATING);
+	pthread_mutex_lock(&data->meal_lock);
 	data->philo->last_meal_time = get_time();
-	print_msg(data, EATING);
+	pthread_mutex_unlock(&data->meal_lock);
 	my_usleep(data->time_to_eat);
+	data->philo->number_meal++;
+	print_msg(data, data->philo->id,"is eating");
 	pthread_mutex_unlock(&data->forks_lock[data->philo->r_fork]);
 	pthread_mutex_unlock(&data->forks_lock[data->philo->l_fork]);
-}
-
-int	sleeping(t_data *data)
-{
-	if(change_state(data,SLEEPING))
-		return(1);
-	print_msg(data, SLEEPING);
-	my_usleep(data->time_to_sleep);
-	return(0);
 }
