@@ -6,7 +6,7 @@
 /*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:55:21 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/03 15:18:16 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/03 16:27:45 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void *routine(void *arg)
 	philo = (t_philo*)arg;
 	if(philo->id % 2 == 0)
 		my_usleep(philo->data->time_to_eat / 2);
-	while (philo->data->is_dead != 1 && philo->data->is_full != 1)
+	while (philo->data->is_dead != 1 || philo->data->is_full != 1)
 	{
 		pthread_create(&t, NULL, death_checker, philo->data);
 		eat(philo);
@@ -46,6 +46,7 @@ void 	eat(t_philo *philo)
 	print_msg(philo->data, philo->id,"has taken a fork");
 	pthread_mutex_lock(&philo->data->meal_lock);
 	philo->last_meal_time = get_time();
+	philo->number_meal++;
 	pthread_mutex_unlock(&philo->data->meal_lock);
 	my_usleep(philo->data->time_to_eat);
 	philo->number_meal++;
@@ -61,24 +62,35 @@ void	sleeping(t_philo *philo, int time)
 	print_msg(philo->data, philo->id,"is thinking");
 }
 
+int		is_dead(t_philo *philo, int nb)
+{
+	pthread_mutex_lock(&philo->data->dead_lock);
+	if (nb)
+		philo->data->is_dead = 1;
+	if(philo->data->is_dead)
+	{
+		pthread_mutex_unlock(&philo->data->dead_lock);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->data->dead_lock);
+	return(0);
+}
+
 void	*death_checker(void *arg)
 {
 	t_philo *philo;
 
 	philo = (t_philo*)arg;
-	while(1)
+	pthread_mutex_lock(&philo->data->end_lock);
+	while(!is_dead(philo,0) && (get_time() - philo->last_meal_time) >= philo->data->time_to_die)
 	{
-		pthread_mutex_lock(&philo->data->write_lock);
-		if ((get_time() - philo->last_meal_time) > philo->data->time_to_die)
-		{
-			philo->data->is_dead = 1;
-			print_msg(philo->data, philo->id,"is dead");
-			pthread_mutex_unlock(&philo->data->write_lock);
-			return (NULL);
-		}
-		pthread_mutex_unlock(&philo->data->write_lock);
-		usleep(100);
+		pthread_mutex_unlock(&philo->data->dead_lock);
+		print_msg(philo->data, philo->id,"is dead");
+		is_dead(philo,1);
+		return (NULL);
 	}
+		pthread_mutex_unlock(&philo->data->dead_lock);
+		usleep(500);
 	return (NULL);
 }
 

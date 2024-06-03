@@ -6,7 +6,7 @@
 /*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:42:32 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/03 15:25:39 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/03 16:14:07 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ static int mutex_init(t_data *data)
 	if(pthread_mutex_init(&data->dead_lock, NULL))
 		return (1);
 	if(pthread_mutex_init(&data->meal_lock, NULL))
+		return (1);
+	if(pthread_mutex_init(&data->end_lock, NULL))
 		return (1);
 	return (0);
 }
