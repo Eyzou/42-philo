@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:55:21 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/03 14:13:33 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/03 14:18:12 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ void *routine(void *arg)
 	pthread_t t;
 
 	philo = (t_philo*)arg;
-	printf("philo %d\n", philo->id);
 	if(philo->id % 2 == 0)
-		sleeping(philo->data,2);
+		my_usleep(philo->data->time_to_eat /2);
 	while (1)// one thread for death checking
 	{
 		pthread_create(&t, NULL, check_death, philo->data);
