@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:55:21 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/03 13:58:57 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/03 14:13:33 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,20 @@ void	print_msg(t_data *data, int id, char *msg)
 
 void *routine(void *arg)
 {
-	t_data *data;
+	t_philo *philo;
 	pthread_t t;
 
-	data = (t_data*)arg;
-	printf("philo %d\n", data->philo->id);
-	if(data->philo->id % 2 == 0)
-		sleeping(data,2);
+	philo = (t_philo*)arg;
+	printf("philo %d\n", philo->id);
+	if(philo->id % 2 == 0)
+		sleeping(philo->data,2);
 	while (1)// one thread for death checking
 	{
-		pthread_create(&t, NULL, check_death, data);
-		eat(data);
-		sleeping(data, 1);
+		pthread_create(&t, NULL, check_death, philo->data);
+		eat(philo->data);
+		sleeping(philo->data, 1);
 		pthread_detach(t);
-		if(data->philo->number_meal == data->number_must_eat)
+		if(philo->number_meal == philo->data->number_must_eat)
 			return (NULL);	
 	}
 	return (NULL);
