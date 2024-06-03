@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/05/31 13:42:36 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/03 13:34:10 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ typedef enum e_state
 
 typedef struct s_philo
 {
+	pthread_t		t;
 	int				id;
 	int				number_meal;
 	long			start_time;
 	int				last_meal_time;
-	int				state;
-	int 	r_fork;
-	int		l_fork;
+	int 			r_fork;
+	int				l_fork;
 	t_data			*data;
 }					t_philo;
 
@@ -52,6 +52,7 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				number_must_eat;
 	int				start_simulation;
+	int				end;
 	pthread_mutex_t	*forks_lock;
 	pthread_mutex_t	write_lock;
 	pthread_mutex_t	dead_lock;
@@ -62,10 +63,11 @@ typedef struct s_data
 // init
 int				prog_init(t_data *data, int argc, char **argv);
 int				create_thread(t_data *data);
+void			*check_death(void *philo);
 void			*routine(void *arg);
 void 			eat(t_data *data);
+void			sleeping(t_data *data, int time);
 void			print_msg(t_data *data, int id, char *msg);
-int				sleeping(t_data *data);
 
 // utils
 long			get_time(void);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:55:21 by ehamm             #+#    #+#             */
-/*   Updated: 2024/05/31 12:31:39 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/03 13:58:57 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,30 +24,38 @@ void	print_msg(t_data *data, int id, char *msg)
 void *routine(void *arg)
 {
 	t_data *data;
+	pthread_t t;
+
 	data = (t_data*)arg;
+	printf("philo %d\n", data->philo->id);
 	if(data->philo->id % 2 == 0)
-		my_usleep(data->time_to_eat / 2);
-	while (1)
+		sleeping(data,2);
+	while (1)// one thread for death checking
 	{
+		pthread_create(&t, NULL, check_death, data);
 		eat(data);
+		sleeping(data, 1);
+		pthread_detach(t);
+		if(data->philo->number_meal == data->number_must_eat)
+			return (NULL);	
 	}
+	return (NULL);
 }
 
 
 int create_thread(t_data *data)
 {
-	pthread_t t[data->number_philo];
 	int i;
 	i = 0;
 	while(i < data->number_philo)
 	{
-		pthread_create(&t[i], NULL, routine(data) ,(void *)&i);
+		pthread_create(&data->philo[i].t, NULL, &routine ,&data->philo[i]);
 		i++;
 	}
 	i = 0;
 	while(i < data->number_philo)
 	{
-		pthread_join(t[i],NULL);
+		pthread_join(data->philo[i].t,NULL);
 		i++;
 	}
 	return (0);
@@ -56,7 +64,9 @@ int create_thread(t_data *data)
 void 	eat(t_data *data)
 {
 	pthread_mutex_lock(&data->forks_lock[data->philo->r_fork]);
+	print_msg(data, data->philo->id,"has taken a fork\n");
 	pthread_mutex_lock(&data->forks_lock[data->philo->l_fork]);
+	print_msg(data, data->philo->id,"has taken a fork\n");
 	pthread_mutex_lock(&data->meal_lock);
 	data->philo->last_meal_time = get_time();
 	pthread_mutex_unlock(&data->meal_lock);
@@ -66,3 +76,24 @@ void 	eat(t_data *data)
 	pthread_mutex_unlock(&data->forks_lock[data->philo->r_fork]);
 	pthread_mutex_unlock(&data->forks_lock[data->philo->l_fork]);
 }
+
+void	sleeping(t_data *data, int time)
+{
+	print_msg(data, data->philo->id,"is sleeping");
+	my_usleep(data->time_to_sleep/time);
+	print_msg(data, data->philo->id,"is thinking");
+}
+
+void	*check_death(void *philo)
+{
+	t_data *data;
+
+	data = (t_data*)philo;
+	my_usleep(data->time_to_die + 1);
+	if ((get_time() - data->philo->last_meal_time) > data->time_to_die)
+	{
+		print_msg(data, data->philo->id,"is dead");
+	}
+	return (NULL);
+}
+

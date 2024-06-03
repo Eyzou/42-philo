@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:42:32 by ehamm             #+#    #+#             */
-/*   Updated: 2024/05/31 13:42:03 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/03 13:57:46 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,15 @@ int prog_init(t_data *data, int argc, char **argv)
 
 static int data_init(t_data *data, int argc, char **argv)
 {
+	data->number_philo = ft_atol(argv[1]);
+	data->start_simulation = get_time();
 	data->philo = malloc(sizeof(t_philo) * data->number_philo);
 	if(!data->philo)
 		return (free(data->philo), 1);
-	data->number_philo = ft_atol(argv[1]);
 	data->time_to_die = ft_atol(argv[2]);
 	data->time_to_eat = ft_atol(argv[3]);
 	data->time_to_sleep = ft_atol(argv[4]);
+	data->end = 0;
 	if (argc == 6)
 	{
 		data->number_must_eat = ft_atol(argv[5]);
@@ -57,9 +59,8 @@ static int philo_init(t_data *data)
 	{
 		data->philo[i].id = i + 1;
 		data->philo[i].number_meal = 0;
-		data->philo[i].last_meal_time = get_time();
-		data->philo[i].start_time = get_time();
-		if (data->philo[i].id % 2 == 0) // exemple : id:2 - take the right fork 1(i)
+		data->philo[i].last_meal_time = 0;
+		if (data->philo[i].id % 2 == 0) // exemple : id:0 - takes r_f i(1) and l_f i+1
 		{
 			data->philo[i].r_fork = i;
 			data->philo[i].l_fork = (i + 1) % data->number_philo;
