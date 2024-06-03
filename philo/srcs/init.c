@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:42:32 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/03 16:14:07 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/03 16:40:40 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static int data_init(t_data *data, int argc, char **argv)
 	data->time_to_die = ft_atol(argv[2]);
 	data->time_to_eat = ft_atol(argv[3]);
 	data->time_to_sleep = ft_atol(argv[4]);
+	data->is_dead = 0;
+	data->is_full = 0;
 	data->end = 0;
 	if (argc == 6)
 	{
