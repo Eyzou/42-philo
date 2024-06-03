@@ -6,7 +6,7 @@
 /*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:42:32 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/03 14:52:36 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/03 15:25:39 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int philo_init(t_data *data)
 	{
 		data->philo[i].id = i + 1;
 		data->philo[i].number_meal = 0;
-		data->philo[i].last_meal_time = 0;
+		data->philo[i].last_meal_time = get_time ();
 		if (data->philo[i].id % 2 == 0) // exemple : id:0 - takes r_f i(1) and l_f i+1
 		{
 			data->philo[i].r_fork = i;
