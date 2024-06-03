@@ -6,7 +6,7 @@
 /*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:47:03 by ehamm             #+#    #+#             */
-/*   Updated: 2024/05/31 11:34:46 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/03 14:53:24 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,18 @@ void my_usleep(int milliseconds)
 		usleep(500);
 }
 
+void	print_msg(t_data *data, int id, char *msg)
+{
+	long time;
+	time = get_time() - data->start_simulation;
+	pthread_mutex_lock(&data->write_lock);
+	printf("%ld %d %s\n", time, id, msg);
+	pthread_mutex_unlock(&data->write_lock);
+}
+
 void error_msg(char *msg)
 {
 	printf("%s\n", msg);
 	exit(EXIT_FAILURE);
 }
+

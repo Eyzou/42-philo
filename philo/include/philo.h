@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/03 13:34:10 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/03 15:17:35 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,10 @@ typedef struct s_philo
 	pthread_t		t;
 	int				id;
 	int				number_meal;
-	long			start_time;
 	int				last_meal_time;
 	int 			r_fork;
 	int				l_fork;
-	t_data			*data;
+	struct s_data			*data;
 }					t_philo;
 
 typedef struct s_data
@@ -51,8 +50,10 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				number_must_eat;
-	int				start_simulation;
+	long int		start_simulation;
 	int				end;
+	int				is_dead; // compare with time_to_die
+	int				is_full; // compare with number_must_eat
 	pthread_mutex_t	*forks_lock;
 	pthread_mutex_t	write_lock;
 	pthread_mutex_t	dead_lock;
@@ -62,17 +63,17 @@ typedef struct s_data
 
 // init
 int				prog_init(t_data *data, int argc, char **argv);
-int				create_thread(t_data *data);
-void			*check_death(void *philo);
+int				init_thread(t_data *data);
+void			*death_checker(void *arg);
 void			*routine(void *arg);
-void 			eat(t_data *data);
-void			sleeping(t_data *data, int time);
-void			print_msg(t_data *data, int id, char *msg);
+void 			eat(t_philo *philo);
+void			sleeping(t_philo *philo, int time);
 
 // utils
 long			get_time(void);
 void 			my_usleep(int milliseconds);
 long			ft_atol(const char *str);
 void 			error_msg(char *msg);
+void			print_msg(t_data *data, int id, char *msg);
 
 #endif

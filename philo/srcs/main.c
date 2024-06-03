@@ -6,7 +6,7 @@
 /*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:54:02 by ehamm             #+#    #+#             */
-/*   Updated: 2024/05/31 11:24:09 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/03 15:08:32 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int main(int argc, char **argv)
 	{
 		data = malloc(sizeof(t_data));
 		prog_init(data, argc, argv);
-		create_thread(data);
+		init_thread(data);
 		// Clean when philos are full or one philo dies
 	}
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:42:32 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/03 13:57:46 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/03 14:52:36 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,23 @@ static int mutex_init(t_data *data)
 		return (1);
 	if(pthread_mutex_init(&data->meal_lock, NULL))
 		return (1);
+	return (0);
+}
+
+int init_thread(t_data *data)
+{
+	int i;
+	i = 0;
+	while(i < data->number_philo)
+	{
+		pthread_create(&data->philo[i].t, NULL, &routine ,&data->philo[i]);
+		i++;
+	}
+	i = 0;
+	while(i < data->number_philo)
+	{
+		pthread_join(data->philo[i].t,NULL);
+		i++;
+	}
 	return (0);
 }
