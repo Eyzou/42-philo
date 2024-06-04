@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:55:21 by ehamm             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/06/04 10:00:28 by ehamm            ###   ########.fr       */
-=======
-/*   Updated: 2024/06/04 10:27:33 by elo              ###   ########.fr       */
->>>>>>> 20491b1309ff02b15a06598ce9887f26a5b0dcdc
+/*   Updated: 2024/06/04 11:42:58 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +40,20 @@ void *routine(void *arg)
 void 	eat_sleep_think(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->forks_lock[philo->r_fork]);
-	print_msg(philo->data, philo->id,"has taken a fork");
+	print_msg(philo->data, philo->id,GREEN,"has taken a fork");
 	pthread_mutex_lock(&philo->data->forks_lock[philo->l_fork]);
-	print_msg(philo->data, philo->id,"has taken a fork");
+	print_msg(philo->data, philo->id,GREEN,"has taken a fork");
 	pthread_mutex_lock(&philo->data->meal_lock);
 	philo->last_meal_time = get_time();
 	pthread_mutex_unlock(&philo->data->meal_lock);
 	my_usleep(philo->data->time_to_eat);
 	philo->number_meal++;
-	print_msg(philo->data, philo->id,"is eating");
+	print_msg(philo->data, philo->id,G_CYAN,"is eating");
 	pthread_mutex_unlock(&philo->data->forks_lock[philo->r_fork]);
 	pthread_mutex_unlock(&philo->data->forks_lock[philo->l_fork]);
-	print_msg(philo->data, philo->id,"is sleeping");
+	print_msg(philo->data, philo->id,B_BLUE,"is sleeping");
 	my_usleep(philo->data->time_to_sleep);
-	print_msg(philo->data, philo->id,"is thinking");
+	print_msg(philo->data, philo->id,BLUE,"is thinking");
 }
 
 int		is_dead(t_philo *philo, int nb)
@@ -79,12 +75,17 @@ void	*death_checker(void *arg)
 	t_philo *philo;
 
 	philo = (t_philo*)arg;
+	printf("philo id: %d\n",philo->id);
+	printf("get time: %ld\n",get_time());
+	printf("last meal time: %ld\n", philo->last_meal_time);
+	printf("get time  - last meal time :%ld \n", (get_time()-philo->last_meal_time));
+	printf("time to die :%ld \n", philo->data->time_to_die);
 	my_usleep(philo->data->time_to_die + 10);
 	pthread_mutex_lock(&philo->data->end_lock);
 	while(!is_dead(philo,0) && (get_time() - philo->last_meal_time) >= philo->data->time_to_die)
 	{
 		pthread_mutex_unlock(&philo->data->dead_lock);
-		print_msg(philo->data, philo->id,"is dead");
+		print_msg(philo->data, philo->id,PINK,"is dead");
 		is_dead(philo,1);
 		return (NULL);
 	}

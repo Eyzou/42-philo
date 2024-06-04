@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:47:03 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/03 16:25:05 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/04 11:41:05 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static const char *valid_input(const char *str)
 	return (number);
 }
 
-long get_time(void) // return time in milliseconds
+uint64_t get_time(void) // return time in milliseconds 1 s = 1 000 ms
 {
 	struct timeval time;
 	if (gettimeofday(&time, NULL) == 1)
@@ -73,7 +73,7 @@ long get_time(void) // return time in milliseconds
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-void my_usleep(int milliseconds)
+void my_usleep(uint16_t milliseconds)
 {
 	int start;
 
@@ -82,12 +82,12 @@ void my_usleep(int milliseconds)
 		usleep(500);
 }
 
-void	print_msg(t_data *data, int id, char *msg)
+void	print_msg(t_data *data, int id, char *color, char *msg)
 {
 	long time;
 	time = get_time() - data->start_simulation;
 	pthread_mutex_lock(&data->write_lock);
-	printf("%ld %d %s\n", time, id, msg);
+	printf("%s%-10ld %-3d %-30s%s\n",color, time, id, msg, RESET);
 	pthread_mutex_unlock(&data->write_lock);
 }
 

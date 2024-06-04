@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/04 10:20:29 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/04 11:41:37 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@
 # include <string.h>   // for memset
 # include <sys/time.h> // gettimeofday
 # include <unistd.h>   // write and usleep
+# include <stdint.h> // uint64_t
+
+# define RESET "\e[0m"
+# define PINK "\e[0;38;5;199m"
+# define GREEN "\e[0;32m"
+# define BLUE "\e[0;34m"
+# define G_BLUE "\e[0;38;5;24m"
+# define B_BLUE "\e[1;34m"
+# define G_CYAN "\e[0;38;5;44m"
 
 typedef struct s_data t_data;
 
@@ -37,7 +46,7 @@ typedef struct s_philo
 	pthread_t		t;
 	int				id;
 	int				number_meal;
-	int				last_meal_time;
+	uint64_t		last_meal_time;
 	int 			r_fork;
 	int				l_fork;
 	struct s_data			*data;
@@ -46,7 +55,7 @@ typedef struct s_philo
 typedef struct s_data
 {
 	int				number_philo;
-	int				time_to_die;
+	uint64_t			time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				number_must_eat;
@@ -68,13 +77,13 @@ int				init_thread(t_data *data);
 void			*death_checker(void *arg);
 void			*routine(void *arg);
 void 			eat_sleep_think(t_philo *philo);
-int		is_dead(t_philo *philo, int nb);
+int				is_dead(t_philo *philo, int nb);
 
 // utils
-long			get_time(void);
-void 			my_usleep(int milliseconds);
+uint64_t 		get_time(void);
+void my_usleep(uint16_t milliseconds);
 long			ft_atol(const char *str);
 void 			error_msg(char *msg);
-void			print_msg(t_data *data, int id, char *msg);
+void			print_msg(t_data *data, int id, char *color, char *msg);
 
 #endif
