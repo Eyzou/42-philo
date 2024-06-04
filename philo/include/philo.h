@@ -6,7 +6,7 @@
 /*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/03 16:13:39 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/04 10:20:29 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int				prog_init(t_data *data, int argc, char **argv);
 int				init_thread(t_data *data);
 void			*death_checker(void *arg);
 void			*routine(void *arg);
-void 			eat(t_philo *philo);
-void			sleeping(t_philo *philo, int time);
+void 			eat_sleep_think(t_philo *philo);
+int		is_dead(t_philo *philo, int nb);
 
 // utils
 long			get_time(void);
