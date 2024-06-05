@@ -6,7 +6,7 @@
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/04 11:41:37 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/05 15:02:53 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ void 			eat_sleep_think(t_philo *philo);
 int				is_dead(t_philo *philo, int nb);
 
 // utils
-uint64_t 		get_time(void);
-void my_usleep(uint16_t milliseconds);
+size_t			get_time(void);
+void 			my_usleep(size_t milliseconds);
 long			ft_atol(const char *str);
 void 			error_msg(char *msg);
 void			print_msg(t_data *data, int id, char *color, char *msg);

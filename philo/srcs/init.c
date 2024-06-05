@@ -6,7 +6,7 @@
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:42:32 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/04 11:44:13 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/05 15:25:41 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,16 @@ static int mutex_init(t_data *data)
 int init_thread(t_data *data)
 {
 	int i;
+	pthread_t t2;
 	i = 0;
+	pthread_create(&t2, NULL, death_checker, data->philo);
 	while(i < data->number_philo)
 	{
 		pthread_create(&data->philo[i].t, NULL, &routine ,&data->philo[i]);
 		i++;
 	}
 	i = 0;
+	pthread_join(t2,NULL);
 	while(i < data->number_philo)
 	{
 		pthread_join(data->philo[i].t,NULL);

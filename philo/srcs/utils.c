@@ -6,7 +6,7 @@
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:47:03 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/04 11:41:05 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/05 15:02:12 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static const char *valid_input(const char *str)
 	return (number);
 }
 
-uint64_t get_time(void) // return time in milliseconds 1 s = 1 000 ms
+size_t get_time(void) // return time in milliseconds 1 s = 1 000 ms
 {
 	struct timeval time;
 	if (gettimeofday(&time, NULL) == 1)
@@ -73,9 +73,9 @@ uint64_t get_time(void) // return time in milliseconds 1 s = 1 000 ms
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-void my_usleep(uint16_t milliseconds)
+void my_usleep(size_t milliseconds)
 {
-	int start;
+	size_t  start;
 
 	start = get_time();
 	while ((get_time() - start) < milliseconds)
