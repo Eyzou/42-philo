@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   close.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 12:54:02 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/05 17:51:08 by elo              ###   ########.fr       */
+/*   Created: 2024/06/05 17:34:18 by elo               #+#    #+#             */
+/*   Updated: 2024/06/05 17:52:49 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int main(int argc, char **argv)
+int	destroy_threads(t_data *data)
 {
-	t_data *data;
+	int	i;
 
-	if (argc == 5 || argc == 6)
+	i = 0;
+	while (i < data->number_philo)
 	{
-		data = malloc(sizeof(t_data));
-		prog_init(data, argc, argv);
-		init_thread(data);
-		// Clean when philos are full or one philo dies
+		pthread_mutex_destroy(&data->forks_lock[i]);
+		i++;
 	}
-	else
-	 	printf("Error: Invalid number of arguments\n Usage: ./philo [number_of_philosophers] [time_to_die]time_to_eat] [time_to_sleep] (optional)[number_of_times_each_philosopher_must_eat]Example: ./philo 5 800 200 200 3\n");
+	pthread_mutex_destroy(&data->dead_lock);
+    pthread_mutex_destroy(&data->meal_lock);
+    pthread_mutex_destroy(&data->write_lock);
+    pthread_mutex_destroy(&data->end_lock);
+	return (0);
+}
+
+void	free_all(t_data *data)
+{
+	free(data->philo);
 }

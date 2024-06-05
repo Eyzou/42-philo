@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/05 15:02:53 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/05 17:40:35 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/time.h> // gettimeofday
 # include <unistd.h>   // write and usleep
 # include <stdint.h> // uint64_t
+# include <limits.h> // limits
 
 # define RESET "\e[0m"
 # define PINK "\e[0;38;5;199m"
