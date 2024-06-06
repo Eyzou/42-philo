@@ -7,6 +7,7 @@ INCLUDE = -I /include
 SRCS = 	srcs/main.c \
 		srcs/init.c \
 		srcs/routine.c \
+		srcs/clear.c \
 		srcs/utils.c 
 
 OBJ = $(SRCS:%.c=%.o)

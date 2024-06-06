@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   clear.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 12:54:02 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/06 17:12:49 by ehamm            ###   ########.fr       */
+/*   Created: 2024/06/06 09:50:23 by ehamm             #+#    #+#             */
+/*   Updated: 2024/06/06 17:08:50 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	main(int argc, char **argv)
+int	error_msg(char *msg)
 {
-	t_data	*data;
-
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (EXIT_FAILURE);
-	if (prog_init(data, argc, argv) == 1 || init_thread(data) == 1)
-		return (EXIT_FAILURE);
-	clean_all(data);
-	return (EXIT_SUCCESS);
+	printf("%s\n", msg);
+	return(1);
 }
+
+void	clean_all(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	free(data->philo);
+	while (i < data->number_philo)
+	{
+		pthread_mutex_destroy(&data->forks_lock[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&data->meal_lock);
+	pthread_mutex_destroy(&data->end_lock);
+	pthread_mutex_destroy(&data->write_lock);
+	pthread_mutex_destroy(&data->dead_lock);
+	free(data->forks_lock);
+	free(data);
+}
+
