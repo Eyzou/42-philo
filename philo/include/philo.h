@@ -6,7 +6,7 @@
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/06 17:16:29 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/06 17:39:29 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/time.h> // gettimeofday
 # include <stdint.h> // gettimeofday
 # include <unistd.h>   // write and usleep
+# include <stdint.h> // uint64_t
 
 # define RESET "\e[0m"
 # define PINK "\e[0;38;5;199m"
