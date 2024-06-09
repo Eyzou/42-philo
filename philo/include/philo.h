@@ -6,7 +6,7 @@
 /*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/09 19:21:24 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/09 19:42:10 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_philo
 	size_t			last_meal_time;
 	int					r_fork;
 	int					l_fork;
-	int					is_full;
+	int					should_eat;
 	struct s_data		*data;
 }						t_philo;
 
@@ -83,6 +83,7 @@ int			init_thread(t_data *data);
 // routine
 void		*death_checker(void *arg);
 void		*routine(void *arg);
+int			is_dead(t_philo *philo);
 
 // utils
 size_t		get_time(void);
