@@ -6,14 +6,14 @@
 /*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:39:58 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/09 19:52:25 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/09 19:57:16 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
 static void	eat_sleep_think(t_philo *philo);
-//static bool	is_dead(t_philo *philo);
+static int		is_dead(t_philo *philo);
 
 void	*routine(void *arg)
 {
@@ -82,9 +82,6 @@ static void	eat_sleep_think(t_philo *philo)
 
 int	is_dead(t_philo *philo)
 {
-	int flag;
-
-	flag = 0;
 	if ((get_time() - philo->last_meal_time) >= philo->data->time_to_die && philo->data->is_full < philo->data->number_philo)
 	{
 		print_msg(philo, philo->id, PINK, "is dead");
@@ -92,7 +89,6 @@ int	is_dead(t_philo *philo)
 		philo->data->is_dead = 1;
 		pthread_mutex_unlock(&philo->data->dead_lock);
 		print_msg(philo, philo->id, PINK, "is dead");
-		flag = 1;
 	}
-	return (flag);
+	return (philo->data->is_dead);
 }

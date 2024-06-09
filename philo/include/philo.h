@@ -6,7 +6,7 @@
 /*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/09 19:53:59 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/09 19:56:00 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,15 @@ int			init_thread(t_data *data);
 // routine
 void		*death_checker(void *arg);
 void		*routine(void *arg);
-int			is_dead(t_philo *philo);
 
 // utils
 size_t		get_time(void);
 void		my_usleep(size_t milliseconds);
 long		ft_atol(const char *str);
-void	print_msg(t_philo *philo, int id, char *color, char *msg);
+void		print_msg(t_philo *philo, int id, char *color, char *msg);
 
 // clean and close
-int	error_msg(char *msg);
+int			error_msg(char *msg);
 void		clean_all(t_data *data);
 
 #endif
