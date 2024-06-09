@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:42:32 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/06 17:18:58 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/07 09:44:58 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	data_init(t_data *data, int argc, char **argv)
 		if (data->number_must_eat < 1 || data->number_philo < 1)
 		{
 			free(data);
-			return (error_msg("nbr_of_philoand must_eat_times must be > 0"), 1);
+			return (error_msg("nbr_of_philo and must_eat_times must be > 0"), 1);
 		}
 	}
 	if (argc == 5)

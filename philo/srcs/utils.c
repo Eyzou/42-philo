@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:47:03 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/06 17:00:47 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/07 10:14:25 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,18 +85,15 @@ void	my_usleep(size_t milliseconds)
 		usleep(500);
 }
 
-int	print_msg(t_data *data, int id, char *color, char *msg)
+void	print_msg(t_data *data, int id, char *color, char *msg)
 {
 	long	time;
 
 	time = get_time() - data->start_simulation;
 	pthread_mutex_lock(&data->write_lock);
-	if (data->is_dead == 0 && data->number_philo != data->is_full)
+	if (data->end == 0)
 	{
 		printf("%s%-10ld %-3d %-30s%s\n", color, time, id, msg, RESET);
 		pthread_mutex_unlock(&data->write_lock);
-		return (0);
-	}
-	else
-		return(1);
+	} 
 }

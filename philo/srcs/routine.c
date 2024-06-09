@@ -3,23 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:39:58 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/06 17:40:03 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/07 10:22:45 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
 static void	eat_sleep_think(t_philo *philo);
-static bool	is_dead(t_data *data, t_philo *philo);
+//static bool	is_dead(t_philo *philo);
 
 void	*routine(void *arg)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	if (philo->data->number_must_eat == 0)
+		return (NULL);
 	if (philo->data->number_philo == 1)
 	{
 		print_msg(philo->data, philo->id, GREEN, "has taken a fork");
@@ -27,17 +29,11 @@ void	*routine(void *arg)
 	}
 	if (philo->id % 2 == 0)
 		my_usleep(philo->data->time_to_eat / 10);
-	while (1)
+	while (philo->data->end != 1)
 	{
 		eat_sleep_think(philo);
-		pthread_mutex_lock(&philo->data->end_lock);
-		if (philo->data->is_full == philo->data->number_philo
-			|| philo->data->is_dead == 1)
-		{
-			pthread_mutex_unlock(&philo->data->end_lock);
-			break;
-		}
-		pthread_mutex_unlock(&philo->data->end_lock);
+		if (philo->data->end == 1)
+			return (NULL);
 	}
 	return (NULL);
 }
@@ -47,26 +43,34 @@ void	*death_checker(void *arg)
 	t_philo	*philo;
 	int		i;
 
+	i = 0;
 	philo = (t_philo *)arg;
 	my_usleep(philo->data->time_to_die + 20);
-	while (1)
+			printf("philo id: %d, get time: %ld last meal time: %ld\n",
+			philo[i].id, get_time(), philo->last_meal_time);
+			printf("get time  - last meal time :%zu \n", (get_time()
+					- philo[i].last_meal_time));
+			printf("time to die :%zu \n", philo[i].data->time_to_die);
+	while(i < philo->data->number_philo)
 	{
-		i = 0;
-		pthread_mutex_lock(&philo->data->dead_lock);
-		while (i < philo[0].data->number_philo)
-		{
-			// printf("philo id: %d, get time: %ld last meal time: %ld\n",
-			// 	philo[i].id, get_time(), philo->last_meal_time);
-			// printf("get time  - last meal time :%ld \n", (get_time()
-			// 		- philo[i].last_meal_time));
-			// printf("time to die :%ld \n", philo[i].data->time_to_die);
-			if (is_dead(philo[i].data, &philo[i]) == true)
-				return (NULL);
-			i++;
-		}
-		pthread_mutex_unlock(&philo->data->dead_lock);
-		usleep(500);
+			pthread_mutex_lock(&philo->data->dead_lock);
+			if ((get_time() - philo->last_meal_time) >= philo->data->time_to_die)
+			{
+				print_msg(philo->data, philo->id, PINK, "is dead");
+				philo->data->end = 1;
+				pthread_mutex_unlock(&philo->data->dead_lock);
+				return(NULL);
+			}
 	}
+			// if (philo->data->number_must_eat > 0 && philo[i].number_meal >= philo->data->number_must_eat
+			// 	&& philo[i].is_full == 0)
+			// 	{
+			// 		philo[i].is_full = 1;
+			// 		philo->data->is_full++;
+			// 		if(philo->data->is_full == philo->data->number_must_eat)
+			// 			return(NULL);
+			// 	}
+		usleep(500);
 	return (NULL);
 }
 
@@ -89,21 +93,17 @@ static void	eat_sleep_think(t_philo *philo)
 	print_msg(philo->data, philo->id, BLUE, "is thinking");
 }
 
-static bool	is_dead(t_data *data, t_philo *philo)
-{
-	if (data->number_must_eat > 0 && philo->number_meal >= data->number_must_eat
-		&& philo->is_full == 0)
-	{
-		data->is_full++;
-		philo->is_full = 1;
-	}
-	printf("id:%d, nb of meal:%d is full:%d\n",philo->id,philo->number_meal,data->is_full);
-	if ((get_time() - philo->last_meal_time) >= philo->data->time_to_die)
-	{
-		print_msg(philo->data, philo->id, PINK, "is dead");
-		philo->data->is_dead = 1;
-		pthread_mutex_unlock(&philo->data->dead_lock);
-		return (true);
-	}
-	return (false);
-}
+// static bool	is_dead(t_philo *philo)
+// {
+// 	if ((get_time() - philo->last_meal_time) >= philo->data->time_to_die)
+// 	{
+// 		print_msg(philo->data, philo->id, PINK, "is dead");
+// 		philo->data->is_dead = 1;
+// 		pthread_mutex_unlock(&philo->data->dead_lock);
+// 		return (true);
+// 	}
+// 	return (false);
+// }
+
+static bool check_meals_eaten(t_philo* philo)
+{}

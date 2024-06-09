@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/06 17:39:29 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/07 10:11:57 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_philo
 	pthread_t			t;
 	int					id;
 	int					number_meal;
-	uint64_t			last_meal_time;
+	size_t			last_meal_time;
 	int					r_fork;
 	int					l_fork;
 	int					is_full;
@@ -60,13 +60,14 @@ typedef struct s_philo
 typedef struct s_data
 {
 	int					number_philo;
-	uint64_t			time_to_die;
+	size_t			time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					number_must_eat;
 	long int			start_simulation;
 	int					is_dead; // compare with time_to_die
 	int					is_full; // compare with number_must_eat
+	int					end;
 	pthread_mutex_t		*forks_lock;
 	pthread_mutex_t		write_lock;
 	pthread_mutex_t		dead_lock;
@@ -87,7 +88,7 @@ void		*routine(void *arg);
 size_t		get_time(void);
 void		my_usleep(size_t milliseconds);
 long		ft_atol(const char *str);
-int			print_msg(t_data *data, int id, char *color, char *msg);
+void			print_msg(t_data *data, int id, char *color, char *msg);
 
 // clean and close
 int	error_msg(char *msg);
