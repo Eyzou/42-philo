@@ -6,7 +6,7 @@
 /*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/09 19:42:10 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/09 19:53:59 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,13 @@ typedef struct s_philo
 typedef struct s_data
 {
 	int					number_philo;
-	size_t			time_to_die;
+	size_t				time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					number_must_eat;
 	long int			start_simulation;
 	int					is_dead; // compare with time_to_die
 	int					is_full; // compare with number_must_eat
-	int					end;
 	pthread_mutex_t		*forks_lock;
 	pthread_mutex_t		write_lock;
 	pthread_mutex_t		dead_lock;

@@ -6,7 +6,7 @@
 /*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:47:03 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/09 19:48:53 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/09 19:54:37 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,7 @@ void	print_msg(t_philo *philo, int id, char *color, char *msg)
 
 	time = get_time() - philo->data->start_simulation;
 	pthread_mutex_lock(&philo->data->write_lock);
-	if ((philo->data->is_full != philo->data->number_philo) && philo->data->end == 0)
-	{
+	if ((philo->data->is_full != philo->data->number_philo) && philo->data->is_dead == 0)
 		printf("%s%-10ld %-3d %-30s%s\n", color, time, id, msg, RESET);
-	} 
 	pthread_mutex_unlock(&philo->data->write_lock);
 }
