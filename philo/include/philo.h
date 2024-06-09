@@ -6,7 +6,7 @@
 /*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/07 10:11:57 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/09 19:21:24 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void		*routine(void *arg);
 size_t		get_time(void);
 void		my_usleep(size_t milliseconds);
 long		ft_atol(const char *str);
-void			print_msg(t_data *data, int id, char *color, char *msg);
+void	print_msg(t_philo *philo, int id, char *color, char *msg);
 
 // clean and close
 int	error_msg(char *msg);
