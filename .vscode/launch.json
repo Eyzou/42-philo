@@ -9,7 +9,7 @@
         "name": "C/C++: clang++ build and debug active file",
         "type": "cppdbg",
         "request": "launch",
-        "program": "/Users/elo/philo-1/philo/philo",
+        "program": "/Users/elo/philo-2/philo/philo",
         "args": [5 800 200 200 3],
         "stopAtEntry": false,
         "cwd": "${workspaceFolder}",
