@@ -6,7 +6,7 @@
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/10 13:53:58 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/10 18:58:46 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_philo
 	pthread_t			t;
 	int					id;
 	int					number_meal;
-	size_t				last_meal_time;
+	long				last_meal_time;
 	int					r_fork;
 	int					l_fork;
 	int					should_eat;
@@ -60,11 +60,12 @@ typedef struct s_philo
 typedef struct s_data
 {
 	int					number_philo;
-	size_t				time_to_die;
-	int					time_to_eat;
-	int					time_to_sleep;
+	long				time_to_die;
+	long				time_to_eat;
+	long				time_to_sleep;
 	int					number_must_eat;
-	long int			start_simulation;
+	long				start_simulation;
+	int					end_sim;
 	int					is_dead; // compare with time_to_die
 	int					is_full; // compare with number_must_eat
 	pthread_mutex_t		*forks_lock;
@@ -91,6 +92,7 @@ size_t		get_time(void);
 void		my_usleep(size_t milliseconds);
 long		ft_atol(const char *str, t_data *data);
 void		print_msg(t_philo *philo, int id, char *color, char *msg);
+void	print_msg_death(t_philo *philo, int id, char *color, char *msg);
 
 // clean and close
 int			error_msg(char *msg);

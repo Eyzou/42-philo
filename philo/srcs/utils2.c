@@ -6,7 +6,7 @@
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:50:23 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/10 13:56:32 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/10 18:43:32 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,19 @@ void	clean_all(t_data *data)
 
 int	is_full(t_philo *philo)
 {
+	int full;
 	pthread_mutex_lock(&philo->data->meal_lock);
-	if (philo->data->is_full >= philo->data->number_philo)
-	{
-		pthread_mutex_unlock(&philo->data->meal_lock);
-		return (1);
-	}
+	full = philo->should_eat;
 	pthread_mutex_unlock(&philo->data->meal_lock);
-	return (0);
+	return (full);
 }
 
 int	is_dead(t_philo *philo)
 {
+	int dead;
 	pthread_mutex_lock(&philo->data->dead_lock);
-	if ((get_time() - philo->last_meal_time) >= philo->data->time_to_die)
-	{
-		pthread_mutex_unlock(&philo->data->dead_lock);
-		return (1);
-	}
+	dead = philo->data->is_dead;
 	pthread_mutex_unlock(&philo->data->dead_lock);
-	return (0);
+	return (dead);
 }
+
