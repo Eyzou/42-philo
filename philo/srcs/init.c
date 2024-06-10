@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:42:32 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/10 11:37:31 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/10 20:27:50 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int	init_thread(t_data *data)
 	pthread_t	t2;
 
 	i = 0;
-	pthread_create(&t2, NULL, death_checker, data->philo);
+	pthread_create(&t2, NULL, health_checker, data->philo);
 	while (i < data->number_philo)
 	{
 		pthread_create(&data->philo[i].t, NULL, &routine, &data->philo[i]);

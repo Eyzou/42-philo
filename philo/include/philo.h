@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/10 18:58:46 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/10 20:28:21 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_philo
 	pthread_t			t;
 	int					id;
 	int					number_meal;
-	long				last_meal_time;
+	size_t				last_meal_time;
 	int					r_fork;
 	int					l_fork;
 	int					should_eat;
@@ -60,11 +60,11 @@ typedef struct s_philo
 typedef struct s_data
 {
 	int					number_philo;
-	long				time_to_die;
-	long				time_to_eat;
-	long				time_to_sleep;
+	size_t				time_to_die;
+	size_t				time_to_eat;
+	size_t				time_to_sleep;
 	int					number_must_eat;
-	long				start_simulation;
+	size_t				start_simulation;
 	int					end_sim;
 	int					is_dead; // compare with time_to_die
 	int					is_full; // compare with number_must_eat
@@ -82,7 +82,7 @@ int			prog_init(t_data *data, int argc, char **argv);
 int			init_thread(t_data *data);
 
 // routine
-void		*death_checker(void *arg);
+void		*health_checker(void *arg);
 void		*routine(void *arg);
 int			is_full(t_philo *philo);
 int			is_dead(t_philo *philo);

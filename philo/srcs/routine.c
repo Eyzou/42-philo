@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:39:58 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/10 18:58:12 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/10 20:43:49 by elo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
 static void	eat_sleep_think(t_philo *philo);
-static int	health_checker(t_philo *philo);
+static int	death_checker(t_philo *philo);
 
 void	*routine(void *arg)
 {
@@ -60,7 +60,7 @@ static void	eat_sleep_think(t_philo *philo)
 	print_msg(philo, philo->id, BLUE, "is thinking");
 }
 
-void	*death_checker(void *arg)
+void	*health_checker(void *arg)
 {
 	t_philo	*philo;
 	int		i;
@@ -70,25 +70,22 @@ void	*death_checker(void *arg)
 	my_usleep(philo->data->time_to_die);
 	while (i < philo->data->number_philo)
 	{
-		if (health_checker(&philo[i]))
+		if (death_checker(&philo[i]))
 			return (NULL);
 		i++;
 	}
 	return (NULL);
 }
 
-int	health_checker(t_philo *philo)
+int	death_checker(t_philo *philo)
 {
-	long	time;
 	int		dead;
 
 	dead = 0;
 	pthread_mutex_lock(&philo->data->time_lock);
-	time = get_time() - philo->last_meal_time;
-	pthread_mutex_unlock(&philo->data->time_lock);
-	if (time > philo->data->time_to_die
-		&& philo->data->is_full < philo->data->number_philo)
+	if (((get_time() - philo->last_meal_time) >= philo->data->time_to_die) && philo->data->is_full < philo->data->number_philo)
 	{
+		pthread_mutex_unlock(&philo->data->time_lock);
 		pthread_mutex_lock(&philo->data->dead_lock);
 		philo->data->is_dead = 1;
 		philo->data->end_sim = true;
@@ -96,5 +93,6 @@ int	health_checker(t_philo *philo)
 		print_msg_death(philo, philo->id, PINK, "is dead");
 		dead = 1;
 	}
+	pthread_mutex_unlock(&philo->data->time_lock);
 	return (dead);
 }
