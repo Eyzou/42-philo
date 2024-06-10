@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/09 19:56:00 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/10 10:17:05 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_philo
 	pthread_t			t;
 	int					id;
 	int					number_meal;
-	size_t			last_meal_time;
+	size_t				last_meal_time;
 	int					r_fork;
 	int					l_fork;
 	int					should_eat;
@@ -86,7 +86,7 @@ void		*routine(void *arg);
 // utils
 size_t		get_time(void);
 void		my_usleep(size_t milliseconds);
-long		ft_atol(const char *str);
+long		ft_atol(const char *str, t_data *data);
 void		print_msg(t_philo *philo, int id, char *color, char *msg);
 
 // clean and close

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:42:32 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/09 19:37:44 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/10 11:05:43 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,19 @@ static int	mutex_init(t_data *data);
 
 int	prog_init(t_data *data, int argc, char **argv)
 {
-	data_init(data, argc, argv);
 	if (argc != 5 && argc != 6)
 	{
-		free(data->philo);
 		free(data);
 		return (error_msg("Arguments should be as follow"
 				" :number_of_philosophers time_to_die "
 				"time_to_eat time_to_sleep "
 				"[number_of_times_each_philosopher_must_eat]"), 1);
+	}
+	data_init(data, argc, argv);
+	if (data->number_philo < 1)
+	{
+		clean_all(data);
+		return (error_msg("nbr_of_philosophers must be > 0"), 1);
 	}
 	philo_init(data);
 	mutex_init(data);
@@ -35,34 +39,30 @@ int	prog_init(t_data *data, int argc, char **argv)
 
 static int	data_init(t_data *data, int argc, char **argv)
 {
-	data->number_philo = ft_atol(argv[1]);
+	data->number_philo = ft_atol(argv[1], data);
 	data->start_simulation = get_time();
 	data->philo = malloc(sizeof(t_philo) * data->number_philo);
 	if (!data->philo)
 		return (free(data->philo), 1);
-	data->time_to_die = ft_atol(argv[2]);
-	data->time_to_eat = ft_atol(argv[3]);
-	data->time_to_sleep = ft_atol(argv[4]);
+	data->forks_lock = malloc(sizeof(pthread_mutex_t) * data->number_philo);
+	if (data->forks_lock == NULL)
+		return (free(data->forks_lock), 1);
+	data->time_to_die = ft_atol(argv[2], data);
+	data->time_to_eat = ft_atol(argv[3], data);
+	data->time_to_sleep = ft_atol(argv[4], data);
 	data->is_dead = 0;
 	data->is_full = 0;
 	if (argc == 6)
 	{
-		data->number_must_eat = ft_atol(argv[5]);
-		if (data->number_must_eat < 1 || data->number_philo < 1)
+		data->number_must_eat = ft_atol(argv[5], data);
+		if (data->number_must_eat < 1)
 		{
-			free(data);
-			return (error_msg("nbr_of_philo and must_eat_times must be > 0"), 1);
+			clean_all(data);
+			return (error_msg("must_eat_times must be > 0"), 1);
 		}
 	}
 	if (argc == 5)
-	{
-		if (data->number_philo < 1)
-		{
-			free(data);
-			return (error_msg("nbr_of_philosophers must be > 0"), 1);
-		}
 		data->number_must_eat = INT_MAX;
-	}
 	return (0);
 }
 
@@ -97,9 +97,6 @@ static int	mutex_init(t_data *data)
 	int	i;
 
 	i = 0;
-	data->forks_lock = malloc(sizeof(pthread_mutex_t) * data->number_philo);
-	if (data->forks_lock == NULL)
-		return (free(data->forks_lock), 1);
 	while (i < data->number_philo)
 	{
 		if (pthread_mutex_init(&data->forks_lock[i], NULL))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:50:23 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/07 09:45:02 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/10 11:05:57 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,7 @@ int	error_msg(char *msg)
 
 void	clean_all(t_data *data)
 {
-	int	i;
-
-	i = 0;
-	free(data->philo);
-	while (i < data->number_philo)
-	{
-		pthread_mutex_destroy(&data->forks_lock[i]);
-		i++;
-	}
-	pthread_mutex_destroy(&data->meal_lock);
-	pthread_mutex_destroy(&data->end_lock);
-	pthread_mutex_destroy(&data->write_lock);
-	pthread_mutex_destroy(&data->dead_lock);
 	free(data->forks_lock);
+	free(data->philo);
 	free(data);
 }
-

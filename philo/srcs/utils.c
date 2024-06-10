@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:47:03 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/09 19:54:37 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/10 11:15:24 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-static const char	*valid_input(const char *str);
+static const char	*valid_input(const char *str, t_data *data);
 
-long	ft_atol(const char *str)
+long	ft_atol(const char *str, t_data *data)
 {
 	long	res;
 	int		sign;
 
 	if (!str)
 		return (1);
-	str = valid_input(str);
+	str = valid_input(str, data);
 	res = 0;
 	sign = 1;
 	while (*str == 32 || (*str >= 9 && *str <= 13))
@@ -42,7 +42,7 @@ long	ft_atol(const char *str)
 	return (res * sign);
 }
 
-static const char	*valid_input(const char *str)
+static const char	*valid_input(const char *str, t_data *data)
 {
 	int			len;
 	const char	*number;
@@ -53,17 +53,21 @@ static const char	*valid_input(const char *str)
 	if (*str == '+')
 		str++;
 	else if (*str == '-')
+	{
+		free(data);
 		error_msg("Error: Negative number");
-	if (*str <= '0' && *str >= '9')
-		error_msg("Error: Input is not a digit");
+	}
 	number = str;
 	while (*str && (*str >= '0' && *str <= '9'))
 	{
 		len++;
 		str++;
 	}
-	if (len > 10)
-		error_msg("Error: Input is too long");
+	if (*str != '\0' || len > 10)
+	{
+		free(data);
+		error_msg("Error: Input is not a digit or is too long ");
+	}
 	return (number);
 }
 
@@ -91,7 +95,8 @@ void	print_msg(t_philo *philo, int id, char *color, char *msg)
 
 	time = get_time() - philo->data->start_simulation;
 	pthread_mutex_lock(&philo->data->write_lock);
-	if ((philo->data->is_full != philo->data->number_philo) && philo->data->is_dead == 0)
+	if ((philo->data->is_full != philo->data->number_philo)
+		&& philo->data->is_dead == 0)
 		printf("%s%-10ld %-3d %-30s%s\n", color, time, id, msg, RESET);
 	pthread_mutex_unlock(&philo->data->write_lock);
 }
