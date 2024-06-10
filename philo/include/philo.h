@@ -6,7 +6,7 @@
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/10 10:17:05 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/10 13:53:58 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_data
 	pthread_mutex_t		dead_lock;
 	pthread_mutex_t		meal_lock;
 	pthread_mutex_t		end_lock;
+	pthread_mutex_t		time_lock;
 	t_philo				*philo;
 }						t_data;
 
@@ -82,6 +83,8 @@ int			init_thread(t_data *data);
 // routine
 void		*death_checker(void *arg);
 void		*routine(void *arg);
+int			is_full(t_philo *philo);
+int			is_dead(t_philo *philo);
 
 // utils
 size_t		get_time(void);
