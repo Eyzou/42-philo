@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/10 20:28:21 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/11 09:26:47 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,7 @@ size_t		get_time(void);
 void		my_usleep(size_t milliseconds);
 long		ft_atol(const char *str, t_data *data);
 void		print_msg(t_philo *philo, int id, char *color, char *msg);
-void	print_msg_death(t_philo *philo, int id, char *color, char *msg);
-
-// clean and close
+void		print_msg_death(t_philo *philo, int id, char *color, char *msg);
 int			error_msg(char *msg);
 void		clean_all(t_data *data);
 

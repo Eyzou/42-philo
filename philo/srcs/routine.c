@@ -6,7 +6,7 @@
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:39:58 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/11 09:22:49 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/11 09:30:13 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	*routine(void *arg)
 		return (NULL);
 	}
 	if (philo->id % 2 == 0)
-		my_usleep(philo->data->time_to_eat/2);
+		my_usleep(philo->data->time_to_eat / 2);
 	while (!(is_dead(philo)) || (is_full(philo)) != 0)
 	{
 		eat_sleep_think(philo);
@@ -79,11 +79,12 @@ void	*health_checker(void *arg)
 
 int	death_checker(t_philo *philo)
 {
-	int		dead;
+	int	dead;
 
 	dead = 0;
 	pthread_mutex_lock(&philo->data->time_lock);
-	if (((get_time() - philo->last_meal_time) >= philo->data->time_to_die) && philo->data->is_full < philo->data->number_philo)
+	if (((get_time() - philo->last_meal_time) >= philo->data->time_to_die)
+		&& philo->data->is_full < philo->data->number_philo)
 	{
 		pthread_mutex_unlock(&philo->data->time_lock);
 		pthread_mutex_lock(&philo->data->dead_lock);
@@ -93,7 +94,7 @@ int	death_checker(t_philo *philo)
 		print_msg_death(philo, philo->id, PINK, "is dead");
 		dead = 1;
 	}
-	else 
+	else
 		pthread_mutex_unlock(&philo->data->time_lock);
 	return (dead);
 }

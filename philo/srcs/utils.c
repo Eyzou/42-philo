@@ -6,7 +6,7 @@
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:47:03 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/10 18:55:25 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/11 09:29:31 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,15 +97,5 @@ void	print_msg(t_philo *philo, int id, char *color, char *msg)
 	time = get_time() - philo->data->start_simulation;
 	if (is_full(philo) != 0 && !(is_dead(philo)))
 		printf("%s%-10ld %-3d %-30s%s\n", color, time, id, msg, RESET);
-	pthread_mutex_unlock(&philo->data->write_lock);
-}
-
-void	print_msg_death(t_philo *philo, int id, char *color, char *msg)
-{
-	long	time;
-
-	pthread_mutex_lock(&philo->data->write_lock);
-	time = get_time() - philo->data->start_simulation;
-	printf("%s%-10ld %-3d %-30s%s\n", color, time, id, msg, RESET);
 	pthread_mutex_unlock(&philo->data->write_lock);
 }
