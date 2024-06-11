@@ -6,7 +6,7 @@
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:39:58 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/11 09:30:13 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/11 14:32:14 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int	death_checker(t_philo *philo)
 		pthread_mutex_unlock(&philo->data->time_lock);
 		pthread_mutex_lock(&philo->data->dead_lock);
 		philo->data->is_dead = 1;
-		philo->data->end_sim = true;
 		pthread_mutex_unlock(&philo->data->dead_lock);
 		print_msg_death(philo, philo->id, PINK, "is dead");
 		dead = 1;

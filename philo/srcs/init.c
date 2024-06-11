@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:42:32 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/10 20:27:50 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/11 14:32:14 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,6 @@ static int	mutex_init(t_data *data)
 	if (pthread_mutex_init(&data->dead_lock, NULL))
 		return (1);
 	if (pthread_mutex_init(&data->meal_lock, NULL))
-		return (1);
-	if (pthread_mutex_init(&data->end_lock, NULL))
 		return (1);
 	if (pthread_mutex_init(&data->time_lock, NULL))
 		return (1);

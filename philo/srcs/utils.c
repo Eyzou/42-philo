@@ -6,7 +6,7 @@
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:47:03 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/11 09:29:31 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/11 14:30:52 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ long	ft_atol(const char *str, t_data *data)
 	long	res;
 	int		sign;
 
-	if (!str)
-		return (1);
 	str = valid_input(str, data);
 	res = 0;
 	sign = 1;
@@ -37,8 +35,11 @@ long	ft_atol(const char *str, t_data *data)
 		res = res * 10 + (*str - '0');
 		str++;
 	}
-	if (res > 2147483647)
-		error_msg("Error: Input is bigger than INT MAX\n");
+	if (res > INT_MAX)
+	{
+		clean_all(data);
+		error_msg("Error: Input is bigger than INT MAX");
+	}
 	return (res * sign);
 }
 
@@ -54,7 +55,7 @@ static const char	*valid_input(const char *str, t_data *data)
 		str++;
 	else if (*str == '-')
 	{
-		free(data);
+		clean_all(data);
 		error_msg("Error: Negative number");
 	}
 	number = str;
@@ -65,8 +66,8 @@ static const char	*valid_input(const char *str, t_data *data)
 	}
 	if (*str != '\0' || len > 10)
 	{
-		free(data);
-		error_msg("Error: Input is not a digit or is too long ");
+		clean_all(data);
+		error_msg("Error: Input is not a digit or is too long");
 	}
 	return (number);
 }

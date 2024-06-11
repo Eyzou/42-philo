@@ -6,7 +6,7 @@
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/11 09:26:47 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/11 14:33:26 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <sys/time.h> // gettimeofday
 # include <stdint.h> // gettimeofday
 # include <unistd.h>   // write and usleep
-# include <stdint.h> // uint64_t
 
 # define RESET "\e[0m"
 # define PINK "\e[0;38;5;199m"
@@ -34,16 +33,6 @@
 # define INT_MAX 2147483647
 
 typedef struct s_data	t_data;
-
-typedef enum e_state
-{
-	EATING = 0,
-	SLEEPING = 1,
-	THINKING = 2,
-	DEAD = 3,
-	FULL = 4,
-	FORK = 5
-}						t_state;
 
 typedef struct s_philo
 {
@@ -65,14 +54,12 @@ typedef struct s_data
 	size_t				time_to_sleep;
 	int					number_must_eat;
 	size_t				start_simulation;
-	int					end_sim;
 	int					is_dead; // compare with time_to_die
 	int					is_full; // compare with number_must_eat
 	pthread_mutex_t		*forks_lock;
 	pthread_mutex_t		write_lock;
 	pthread_mutex_t		dead_lock;
 	pthread_mutex_t		meal_lock;
-	pthread_mutex_t		end_lock;
 	pthread_mutex_t		time_lock;
 	t_philo				*philo;
 }						t_data;
