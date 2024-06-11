@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elo <elo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:39:58 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/10 20:43:49 by elo              ###   ########.fr       */
+/*   Updated: 2024/06/11 09:22:49 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	death_checker(t_philo *philo)
 		print_msg_death(philo, philo->id, PINK, "is dead");
 		dead = 1;
 	}
-	pthread_mutex_unlock(&philo->data->time_lock);
+	else 
+		pthread_mutex_unlock(&philo->data->time_lock);
 	return (dead);
 }
