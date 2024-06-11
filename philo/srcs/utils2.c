@@ -6,7 +6,7 @@
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 09:50:23 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/11 14:21:25 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/11 14:37:52 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ int	error_msg(char *msg)
 
 void	clean_all(t_data *data)
 {
-	free(data->forks_lock);
-	free(data->philo);
+	if(data->forks_lock)
+		free(data->forks_lock);
+	if(data->philo)	
+		free(data->philo);
 	free(data);
 }
 

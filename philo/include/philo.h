@@ -6,7 +6,7 @@
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:59:07 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/11 14:33:26 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/11 14:34:40 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define G_CYAN "\e[0;38;5;44m"
 
 # define INT_MAX 2147483647
+# define PHILO_MAX 200
 
 typedef struct s_data	t_data;
 

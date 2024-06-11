@@ -6,7 +6,7 @@
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:42:32 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/11 14:32:14 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/11 14:35:25 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	prog_init(t_data *data, int argc, char **argv)
 				"[number_of_times_each_philosopher_must_eat]"), 1);
 	}
 	data_init(data, argc, argv);
-	if (data->number_philo < 1)
+	if (data->number_philo < 1 || data->number_philo > 200)
 	{
 		clean_all(data);
-		return (error_msg("nbr_of_philosophers must be > 0"), 1);
+		return (error_msg("nbr_of_philosophers must be > 0 & < 200"), 1);
 	}
 	philo_init(data);
 	mutex_init(data);
