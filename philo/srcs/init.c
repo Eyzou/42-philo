@@ -6,7 +6,7 @@
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:42:32 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/17 09:54:12 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/17 11:04:53 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	prog_init(t_data *data, int argc, char **argv)
 				"time_to_eat time_to_sleep "
 				"[number_of_times_each_philosopher_must_eat]"), 1);
 	}
+	data->forks_lock = NULL;
+	data->philo = NULL;
 	data_init(data, argc, argv);
 	if (data->number_philo < 1 || data->number_philo > 200)
 	{
