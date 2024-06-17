@@ -6,7 +6,7 @@
 /*   By: ehamm <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:40:28 by ehamm             #+#    #+#             */
-/*   Updated: 2024/06/11 15:54:34 by ehamm            ###   ########.fr       */
+/*   Updated: 2024/06/17 09:58:26 by ehamm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	if (prog_init(data, argc, argv) == 1 || init_thread(data) == 1)
 		return (EXIT_FAILURE);
-	else 
+	else
 		clean_all(data);
 	return (EXIT_SUCCESS);
 }
